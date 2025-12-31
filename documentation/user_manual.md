@@ -1,4 +1,4 @@
-## How to use it
+## User Manual
 The scripted effect can be called as such:
 ```
 digcf_convert_devout_ig = {
