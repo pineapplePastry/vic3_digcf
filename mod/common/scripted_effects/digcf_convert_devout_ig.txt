@@ -1,0 +1,257 @@
+digcf_convert_devout_ig = {
+	if = {
+		### PARAMETERS
+		limit = {
+			exists = $target_country$ # the country whose devout IG is going to be converted
+			exists = $target_religion$ # the religion to convert that devout IG to
+		}
+
+		$target_country$ = { save_scope_as = digcf_target_country }
+		$target_religion$ = { save_scope_as = digcf_target_religion }
+
+		if = {
+			limit = {
+				NOT = {
+					scope:digcf_target_country.religion = scope:digcf_target_religion #if the religions are the same then there's no need to change anything
+					scope:digcf_target_religion = rel:atheist #atheism doesn't actually change the devout IG, just force a State Atheism law enactment instead.
+				}
+			}
+
+			scope:digcf_target_country = {
+
+				if = {
+					limit = { has_law_or_variant = law_type:law_state_atheism }
+					activate_law = law_type:law_freedom_of_conscience
+				}
+
+				set_state_religion = root.religion
+				state_religion_switch_effect = yes
+
+				ig:ig_devout = {
+					save_scope_as = digcf_devout_ig
+
+					hidden_effect = { 
+
+						### CHANGING DEVOUT IG IDEOLOGIES
+						## We add the basic ideologies and swap as necessary
+						if = {
+							limit = { NOT = { has_ideology = ideology:ideology_corporatist } }
+							add_ideology = ideology_pious
+						}
+						add_ideology = ideology_moralist
+						add_ideology = ideology_patriarchal
+
+						## Strip away proprietary ideologies, by the end of this step they should be left with the basic devout ideologies
+						# Religion-specific
+						remove_ideology = ideology_orthodox_patriarch
+						remove_ideology = ideology_oriental_orthodox_patriarch
+						remove_ideology = ideology_shinto_moralist
+						remove_ideology = ideology_buddhist_moralist
+						remove_ideology = ideology_hindu_moralist
+						remove_ideology = ideology_sikh_moralist
+						remove_ideology = ideology_confucian
+						# Country-specific
+						remove_ideology = ideology_heavenly_kingdom_theocratic
+						remove_ideology = ideology_russian_patriarch
+
+						### CHANGING DEVOUT IG TRAITS
+						## We set the basic traits and swap as necessary
+						set_ig_trait = ig_trait:ig_trait_pious_fiction
+						set_ig_trait = ig_trait:ig_trait_divine_right
+						set_ig_trait = ig_trait:ig_trait_be_fruitful_and_multiply
+
+						## Now we add the proprietary ideologies that belong to the target religion
+						## We also add the proprietary traits here, since adding them just overwrites the old one (at least according to the "Adopt State Shinto" decision)
+						switch = {
+							trigger = scope:digcf_target_religion
+							# Christian
+							rel:catholic = {
+								set_interest_group_name = ig_catholic_church
+
+								# Has no propriety ideologies
+
+								# Has no proprietary traits
+							}
+							rel:protestant = {
+								set_interest_group_name = ig_evangelical_church
+
+								# Has no propriety ideologies
+
+								# Insert proprietary traits
+								set_ig_trait = ig_trait:ig_trait_work_ethic
+							}
+							rel:orthodox = {
+								set_interest_group_name = ig_orthodox_church
+
+								# Insert proprietary ideologies
+								add_ideology = ideology_orthodox_patriarch
+								remove_ideology = ideology_patriarchal
+
+								# Has no proprietary traits
+							}
+							rel:oriental_orthodox = {
+								set_interest_group_name = ig_oriental_orthodox_church
+
+								# Insert proprietary ideologies
+								add_ideology = ideology_oriental_orthodox_patriarch
+								remove_ideology = ideology_patriarchal
+
+								# Has no proprietary traits
+							}
+							# Islamic
+							rel:sunni = {
+								set_interest_group_name = ig_sunni_madrasahs
+
+								# Has no propriety ideologies
+
+								#Insert proprietary traits
+								set_ig_trait = ig_trait:ig_trait_sharia
+								set_ig_trait = ig_trait:ig_trait_da_wat
+							}
+							rel:shiite = {
+								set_interest_group_name = ig_shia_madrasahs
+
+								# Has no propriety ideologies
+
+								# Insert proprietary traits
+								set_ig_trait = ig_trait:ig_trait_sharia
+								set_ig_trait = ig_trait:ig_trait_da_wat
+							}
+							rel:ibadi = {
+								set_interest_group_name = ig_ibadi_madrasahs
+
+								# Insert proprietary ideologies
+								add_ideology = ideology_ibadi_shura
+								add_ideology = ideology_ibadi_imamate 
+								remove_ideology = ideology_moralist
+								remove_ideology = ideology_patriarchal
+
+								# Insert proprietary traits
+								set_ig_trait = ig_trait:ig_trait_sharia
+								set_ig_trait = ig_trait:ig_trait_da_wat
+							}
+							# Oriental
+							rel:confucian = {
+								set_interest_group_name = ig_confucian
+
+								# Insert proprietary ideologies
+								add_ideology = ideology_confucian 
+								remove_ideology = ideology_moralist
+								remove_ideology = ideology_pious
+
+								# Insert proprietary traits
+								set_ig_trait = ig_trait:ig_trait_asceticism
+							}
+							rel:shinto = {
+								set_interest_group_name = ig_shinto_monks
+
+								# Insert proprietary ideologies
+								add_ideology = ideology_shinto_moralist
+								remove_ideology = ideology_moralist
+
+								# Insert proprietary traits
+								set_ig_trait = ig_trait:ig_trait_haibutsu_kishaku
+								set_ig_trait = ig_trait:ig_trait_secular_shrine_theory
+								set_ig_trait = ig_trait:ig_trait_heavenly_sovereign
+							}
+							rel:mahayana = {
+								set_interest_group_name = ig_mahayana_monks
+
+								# Insert proprietary ideologies
+								add_ideology = ideology_buddhist_moralist
+								remove_ideology = ideology_moralist
+
+								# Insert proprietary traits
+								set_ig_trait = ig_trait:ig_trait_asceticism
+							}
+							rel:gelugpa = {
+								set_interest_group_name = ig_vajrayana_monks
+
+								# Insert proprietary ideologies
+								add_ideology = ideology_buddhist_moralist
+								remove_ideology = ideology_moralist
+
+								# Insert proprietary traits
+								set_ig_trait = ig_trait:ig_trait_temporal_mandate
+							}
+							rel:theravada = {
+								set_interest_group_name = ig_theravada_monks
+
+								# Insert proprietary ideologies
+								add_ideology = ideology_buddhist_moralist
+								remove_ideology = ideology_moralist
+
+								#Insert proprietary traits
+								set_ig_trait = ig_trait:ig_trait_asceticism
+							}
+							rel:hindu = {
+								set_interest_group_name = ig_hindu_priesthood
+
+								# Insert proprietary ideologies
+								add_ideology = ideology_hindu_moralist
+								remove_ideology = ideology_moralist
+
+								# Insert proprietary traits
+								set_ig_trait = ig_trait:ig_trait_asceticism
+							}
+							rel:sikh = {
+								set_interest_group_name = ig_sikh_priesthood
+
+								# Insert proprietary ideologies
+								add_ideology = ideology_sikh_moralist
+								remove_ideology = ideology_moralist
+
+								# Insert proprietary traits
+								set_ig_trait = ig_trait:ig_trait_rehat
+								set_ig_trait = ig_trait:ig_trait_kar_seva
+							}
+							# misc
+							rel:jewish = {
+								set_interest_group_name = ig_rabbinical_council
+
+								# Has no propriety ideologies
+
+								# Insert proprietary traits
+								set_ig_trait = ig_trait:ig_trait_traditsye
+								set_ig_trait = ig_trait:ig_trait_yeshivot
+								set_ig_trait = ig_trait:ig_trait_the_best_revenge
+							}
+							rel:animist = {
+								set_interest_group_name = ig_devout
+
+								# Has no propriety ideologies
+
+								# Has no proprietary traits
+							}
+						}
+					}
+
+					leader = {
+						kill_character = { hidden = yes }
+					}
+				}
+
+				hidden_effect = {
+					every_scope_state = {
+						convert_population = {
+							target = scope:digcf_target_religion
+							value = 0.01
+						}	
+					}
+
+				}
+
+				every_scope_character = {
+					limit = {
+						is_ruler = yes
+						OR = {
+							is_monarch = yes
+							is_heir = yes
+						}
+					}
+					change_character_religion = scope:digcf_target_religion
+				}
+			}
+		}
+	}
+}
