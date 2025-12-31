@@ -11,4 +11,4 @@ The scripted effect behind this framework serves as a way for modders (namely my
  - Retires the current leader of the IG, allowing the game to auto-generate a new one with the correct religion
  - Converts 1% of the population in every owned state to the target religion, to allow assimilation to start
 ## How to use it
-See the [user's manual](documentation/user_manual) for how to use it and what parameters it takes.
+See the [user's manual](documentation/user_manual.md) for how to use it and what parameters it takes.
