@@ -1,5 +1,5 @@
 # (Victoria 3 Mod) Devout Interest Group Conversion Framework
-## Steam Page
+## Steam Workshop Page
 > https://steamcommunity.com/sharedfiles/filedetails/?id=3635690757
 ## Description
 The scripted effect behind this framework serves as a way for modders (namely myself, but all are welcome) to quickly convert a country's Devout interest group into that of any target religion, except Atheism.
