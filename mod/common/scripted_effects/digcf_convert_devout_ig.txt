@@ -11,10 +11,7 @@ digcf_convert_devout_ig = {
 
 		if = {
 			limit = {
-				NOT = {
-					scope:digcf_target_country.religion = scope:digcf_target_religion #if the religions are the same then there's no need to change anything
-					scope:digcf_target_religion = rel:atheist #atheism doesn't actually change the devout IG, just force a State Atheism law enactment instead.
-				}
+				NOT = { scope:digcf_target_religion = rel:atheist } #atheism doesn't actually change the devout IG, just force a State Atheism law enactment instead.
 			}
 
 			scope:digcf_target_country = {
