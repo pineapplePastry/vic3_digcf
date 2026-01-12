@@ -18,9 +18,6 @@ digcf_convert_devout_ig = {
 			}
 
 			scope:digcf_target_country = {
-				set_state_religion = root.religion
-				state_religion_switch_effect = yes
-
 				ig:ig_devout = {
 					save_scope_as = digcf_devout_ig
 
