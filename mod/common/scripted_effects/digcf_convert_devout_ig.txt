@@ -50,6 +50,9 @@ digcf_convert_devout_ig = {
 
 						## Now we add the proprietary ideologies that belong to the target religion
 						## We also add the proprietary traits here, since adding them just overwrites the old one (at least according to the "Adopt State Shinto" decision)
+						
+						run_devout_switch_effect = { REL = scope:digcf_target_religion }
+						
 						switch = {
 							trigger = scope:digcf_target_religion
 							# Christian
@@ -242,4 +245,21 @@ digcf_convert_devout_ig = {
 			}
 		}
 	}
+}
+
+run_devout_switch_effect = {
+	digcf_$REL$_devout_switch = yes
+}
+
+digcf_catholic_devout_switch = {
+	set_interest_group_name = ig_catholic_church
+	# Has no propriety ideologies
+	# Has no proprietary traits
+}
+
+digcf_protestant_devout_switch = {
+	set_interest_group_name = ig_evangelical_church
+	# Has no propriety ideologies
+	# Insert proprietary traits
+	set_ig_trait = ig_trait:ig_trait_work_ethic
 }
